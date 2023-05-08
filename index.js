@@ -24,6 +24,14 @@ function isZeroNeeded(time){
 
 const createTimerAnimator = () => {
   return (seconds) => {
+    let max = 86400;
+    let question = seconds > max
+    ? confirm(`Этот таймер не оптимизирован для времени большем чем в сутках.
+    \nВ сутках ${max} секунд, а Вы ввели ${seconds}.
+    \nМне запретили менять дизайн приложения. Все идет к тому, что колличество часов при старте будет "некрасивым"
+    \nМожет изменим значение на ${max}?`)
+    : false;
+    seconds = question ? max : seconds;
     interval = setInterval(() => {
       timerEl.innerText = convertSeconds(seconds);
       if (seconds <= 0) {
